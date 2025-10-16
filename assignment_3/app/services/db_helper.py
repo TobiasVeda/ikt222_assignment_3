@@ -7,8 +7,14 @@ def get_user_form_id(db, user_id):
     return db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
 
 def add_new_user(db, username, password):
-    db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-    db.commit()
+    test = db.execute("SELECT 1 FROM users WHERE username = ? LIMIT 1", (username,))
+    if test.fetchone() is None:
+        db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+        db.commit()
+        return True
+
+    return False
+
 
 def reset_failed_streak(db, user_id):
     db.execute("UPDATE users SET failed_attempts = ?, lockout_streak = ? WHERE id = ?", (0, 0, user_id,))

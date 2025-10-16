@@ -1,17 +1,18 @@
 import os
 from datetime import timedelta
+from doctest import debug
 
 from flask import Flask
 from app.db import init_db, close_db
 
 def create_app():
     app = Flask(__name__)
-    app.config['DATABASE'] = os.path.join(app.instance_path, 'database.db')
+    app.config["DATABASE"] = os.path.join(app.instance_path, "database.db")
 
-    app.config['SECRET_KEY'] = os.urandom(24) # Ensures cookies cant be tampered with
-    app.config['SESSION_COOKIE_SECURE'] = False # false when dev on http
-    app.config['SESSION_COOKIE_HTTPONLY'] = True
-    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+    app.config["SECRET_KEY"] = os.urandom(24) # Ensures cookies cant be tampered with
+    app.config["SESSION_COOKIE_SECURE"] = True # HTTP localhost allowed
+    app.config["SESSION_COOKIE_HTTPONLY"] = True # HttpOnly
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30) # Lifetime
 
     # Ensure instance folder exists
     os.makedirs(app.instance_path, exist_ok=True)

@@ -12,8 +12,12 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        if not hashing.password_strong(password):
+            return render_template("register.html", error="Password must contain: <br>- At least 8 characters <br>- Upper and lowercase <br>- At least one number <br>- At least one special character")
         password = hashing.hash_password(password)
-        db_helper.add_new_user(db, username, password)
+        if not db_helper.add_new_user(db, username, password):
+            return render_template("register.html", error="Username already taken")
+
         return redirect("/")
 
     return render_template("register.html")
