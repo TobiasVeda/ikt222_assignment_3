@@ -5,7 +5,7 @@ from app.services import hashing, timeout, db_helper
 
 bp = Blueprint("password", __name__)
 
-#TODO: password requirements, unique users
+
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     db = get_db()

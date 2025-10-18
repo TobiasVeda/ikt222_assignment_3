@@ -25,7 +25,7 @@ def init_db(app):
     conn.commit()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id TEXT PRIMARY KEY NOT NULL,
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             failed_attempts INTEGER DEFAULT 0,

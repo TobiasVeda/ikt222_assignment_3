@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 
 def get_user_form_username(db, username):
@@ -9,7 +10,8 @@ def get_user_form_id(db, user_id):
 def add_new_user(db, username, password):
     test = db.execute("SELECT 1 FROM users WHERE username = ? LIMIT 1", (username,))
     if test.fetchone() is None:
-        db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+        user_id = str(uuid.uuid4())
+        db.execute("INSERT INTO users (id, username, password) VALUES (?, ?, ?)", (user_id, username, password))
         db.commit()
         return True
 
