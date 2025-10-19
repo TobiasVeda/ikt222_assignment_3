@@ -33,6 +33,7 @@ def login():
         user = db_helper.get_user_form_username(db, username_attempt)
 
         if user is None:
+            print("a")
             return render_template("login.html", error="Invalid username or password")
 
         user_id = user["id"]
@@ -53,7 +54,7 @@ def login():
 
         if not timeout.has_remaining_attempts(failed_attempts):
             db_helper.lock_out_user(db, user_id, lockout_streak)
-            return render_template("login.html", error=f"User {username_attempt} locked out for {timeout.lockout_duration(lockout_streak)} minutes.")
+            return render_template("login.html", error=f"User {username_attempt} locked out.")
 
 
         db_helper.add_failed_attempt(db, user_id, failed_attempts)

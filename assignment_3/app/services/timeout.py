@@ -20,7 +20,7 @@ def remaining_minutes(timestamp, streak):
 
 # Check if user has more guesses
 def has_remaining_attempts(fail):
-    return fail+1 > LOCKOUT_THRESHOLD
+    return fail+1 < LOCKOUT_THRESHOLD
 
 # How long a lockout should last based on lockouts in a row
 def lockout_duration(lockout_streak):
