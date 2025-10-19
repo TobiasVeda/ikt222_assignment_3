@@ -4,14 +4,17 @@ from app.services import db_helper
 
 bp = Blueprint("main", __name__)
 
+# Home page
 @bp.route("/", methods=("GET", "POST"))
 def index():
 
     return render_template("index.html")
 
+# Dashboard. Require login
 @bp.route("/dashboard", methods=("GET", "POST"))
 def dashboard():
 
+    # is cookie "user_id" present
     if "user_id" in session:
         db = get_db()
         user = db_helper.get_user_form_id(db, session["user_id"])

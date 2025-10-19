@@ -2,7 +2,7 @@ import bcrypt
 
 def hash_password(password: str) -> bytes:
     encoded = password.encode("utf-8")
-    salt = bcrypt.gensalt()
+    salt = bcrypt.gensalt() # cost 12 by default, 2^12 rounds
     hashed = bcrypt.hashpw(encoded, salt)
     return hashed
 
@@ -10,6 +10,7 @@ def verify_password(hashed: bytes, password: str) -> bool:
     encoded = password.encode("utf-8")
     return bcrypt.checkpw(encoded, hashed)
 
+# Verify that the password has upper and lowercase, number, and special char
 def password_strong(password: str) -> bool:
     if len(password) < 8:
         return False

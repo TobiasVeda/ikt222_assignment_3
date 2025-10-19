@@ -26,7 +26,7 @@ def init_db(app):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id TEXT PRIMARY KEY NOT NULL,
-            username TEXT NOT NULL,
+            username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
             failed_attempts INTEGER DEFAULT 0,
             last_lockout TEXT DEFAULT NULL,

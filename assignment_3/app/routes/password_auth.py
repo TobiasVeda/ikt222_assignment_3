@@ -5,7 +5,7 @@ from app.services import hashing, timeout, db_helper
 
 bp = Blueprint("password", __name__)
 
-
+# Register page
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     db = get_db()
@@ -22,7 +22,7 @@ def register():
 
     return render_template("register.html")
 
-
+# Login page
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":

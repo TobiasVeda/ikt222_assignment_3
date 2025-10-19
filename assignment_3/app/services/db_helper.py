@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+# Hides SQL from rest of code by putting in functions here
 
 def get_user_form_username(db, username):
     return db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
@@ -16,7 +17,6 @@ def add_new_user(db, username, password):
         return True
 
     return False
-
 
 def reset_failed_streak(db, user_id):
     db.execute("UPDATE users SET failed_attempts = ?, lockout_streak = ? WHERE id = ?", (0, 0, user_id,))
