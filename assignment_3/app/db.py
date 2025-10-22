@@ -30,7 +30,9 @@ def init_db(app):
             password TEXT NOT NULL,
             failed_attempts INTEGER DEFAULT 0,
             last_lockout TEXT DEFAULT NULL,
-            lockout_streak INTEGER DEFAULT 0
+            lockout_streak INTEGER DEFAULT 0,
+            totp_secret TEXT,
+            two_factor_enabled INTEGER DEFAULT 0
         )
     """)
     conn.commit()

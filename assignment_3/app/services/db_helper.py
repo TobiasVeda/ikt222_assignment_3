@@ -50,3 +50,31 @@ def lock_out_user(db, user_id, lockout_streak):
 def add_failed_attempt(db, user_id, failed_attempts):
     db.execute("UPDATE users SET failed_attempts = ? WHERE id = ?", (failed_attempts + 1, user_id,))
     db.commit()
+
+
+def enable_2fa_for_user(db, user_id, totp_secret):
+    db.execute(
+        "UPDATE users SET totp_secret = ?, two_factor_enabled = 1 WHERE id = ?",
+        (totp_secret, user_id)
+    )
+    db.commit()
+    return True
+
+def disable_2fa_for_user(db, user_id):
+    db.execute(
+        "UPDATE users SET totp_secret = NULL, two_factor_enabled = 0 WHERE id = ?",
+        (user_id,)
+    )
+    db.commit()
+    return True
+
+
+def is_2fa_enabled(db, user_id):
+    user = db.execute(
+        "SELECT two_factor_enabled, totp_secret FROM users WHERE id = ?",
+        (user_id,)
+    ).fetchone()
+
+    if user:
+        return user["two_factor_enabled"] == 1 and user["totp_secret"] is not None
+    return False
