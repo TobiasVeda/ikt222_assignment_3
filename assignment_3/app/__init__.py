@@ -1,11 +1,15 @@
 import os
 from datetime import timedelta
-from doctest import debug
+from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 
 from flask import Flask
 from app.db import init_db, close_db
 
+load_dotenv()
+
 def create_app():
+    oauth = OAuth()
     app = Flask(__name__)
     app.config["DATABASE"] = os.path.join(app.instance_path, "database.db")
 
@@ -19,6 +23,18 @@ def create_app():
 
     # Initialize the database
     init_db(app)
+
+    # Initialize OAuth with app
+    oauth.init_app(app)
+
+    # Configure OAuth with Google
+    oauth.register(
+        name='google',
+        client_id=os.getenv('GOOGLE_CLIENT_ID'),
+        client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={'scope': 'openid email profile'}
+    )
 
     # Register blueprints
     from .routes.main import bp as main_bp
