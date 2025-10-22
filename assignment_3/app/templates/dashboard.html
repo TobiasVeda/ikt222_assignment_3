@@ -2,15 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask User Form</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 </head>
 <body>
-    <h1>Welcome, {{user}}</h1>
-    <p>Select an action:</p>
+    <h1>Welcome, {{ user }}</h1>
 
-    <a href="{{ url_for("main.index") }}" class="btn">Index</a>
-    <a href="{{ url_for("main.index") }}" class="btn">2FA</a>
+    <h2>Two-Factor Authentication</h2>
 
+    {% if two_factor_enabled %}
+    <p>Status: <strong style="color: green;">Enabled</strong></p>
+    <form method="POST" action="{{ url_for('two_factor.disable_2fa') }}"
+          onsubmit="return confirm('Disable 2FA? This will make your account less secure.');">
+        <button type="submit" class="btn">Disable 2FA</button>
+    </form>
+    {% else %}
+    <p>Status: <strong style="color: red;">Disabled</strong></p>
+    <a href="{{ url_for('two_factor.enable_2fa') }}" class="btn">Enable 2FA</a>
+    {% endif %}
+
+    <br><br>
+    <a href="{{ url_for('main.index') }}" class="btn">Home</a>
 </body>
 </html>

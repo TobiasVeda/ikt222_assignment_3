@@ -48,9 +48,15 @@ def login():
                 return render_template("login.html", error=f"User {username_attempt} locked out for {remaining} minutes.")
 
         if hashing.verify_password(password, password_attempt):
-            session["user_id"] = user_id
-            db_helper.reset_failed_streak(db, user_id)
-            return redirect(url_for("main.dashboard"))
+            # Password is correct - check if 2FA is enabled
+            if db_helper.is_2fa_enabled(db, user_id):
+                # Store user ID temporarily and redirect to 2FA verification
+                session["pending_2fa_user_id"] = user_id
+                return redirect(url_for("two_factor.verify_2fa"))
+            else:
+                session["user_id"] = user_id
+                db_helper.reset_failed_streak(db, user_id)
+                return redirect(url_for("main.dashboard"))
 
         if not timeout.has_remaining_attempts(failed_attempts):
             db_helper.lock_out_user(db, user_id, lockout_streak)

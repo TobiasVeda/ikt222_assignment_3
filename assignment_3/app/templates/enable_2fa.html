@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enable 2FA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+</head>
+<body>
+    <h1>Enable Two-Factor Authentication</h1>
+
+    <h3>Instructions:</h3>
+    <p>1. Download Google Authenticator on your phone<br>
+       2. Open the app and tap the "+" button<br>
+       3. Scan the QR code below<br>
+       4. Enter the 6-digit code to verify</p>
+
+    {% if qr_code %}
+    <div style="margin: 30px 0;">
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" style="max-width: 300px;" />
+    </div>
+
+    <p><strong>Secret Key:</strong> {{ secret }}</p>
+    <p><small>(Save this in case you lose your phone)</small></p>
+
+    <form method="POST">
+        <p>Enter the 6-digit code from your app:</p>
+        <input type="text" name="verification_code" placeholder="000000"
+               maxlength="6" pattern="[0-9]{6}" required
+               style="padding: 10px; font-size: 18px; text-align: center; letter-spacing: 5px;">
+        <br><br>
+
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <button type="submit" class="btn">Verify and Enable 2FA</button>
+    </form>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('main.dashboard') }}" class="btn">Back to Dashboard</a>
+</body>
+</html>
