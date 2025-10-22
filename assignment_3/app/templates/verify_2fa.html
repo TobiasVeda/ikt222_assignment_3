@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify 2FA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+</head>
+<body>
+    <h1>Two-Factor Authentication</h1>
+
+    <p>Open your Google Authenticator app and enter the 6-digit code:</p>
+
+    <form method="POST">
+        <input type="text" name="verification_code" placeholder="000000"
+               maxlength="6" pattern="[0-9]{6}" autocomplete="off" autofocus required
+               style="padding: 15px; font-size: 24px; text-align: center; letter-spacing: 8px; font-weight: bold;">
+        <br><br>
+
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <button type="submit" class="btn">Verify</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('password.login') }}" class="btn">Back to Login</a>
+
+    <script>
+        // Auto-submit when 6 digits entered
+        document.getElementById('verification_code')?.addEventListener('input', function(e) {
+            if (e.target.value.length === 6) {
+                e.target.form.submit();
+            }
+        });
+    </script>
+</body>
+</html>
