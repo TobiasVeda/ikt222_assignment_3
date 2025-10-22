@@ -108,6 +108,21 @@ The application also integrates **OAuth2 Authorization Code Flow** for third-par
   ```bash
   pip install -r requirements.txt 
   ```
+### Environment Configuration
+  1. create a `.env` file in the project root directory. This file stores sensitive configuration variables such as Flask secrets and OAuth2 credentials.
+  2. Example file:
+  ```
+  GOOGLE_CLIENT_ID=your_google_client_id_here.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+  GOOGLE_REDIRECT_URI=http://localhost:5000/oauth/callback
+
+  ```
+  3. You can find your Google Client ID and Google Client Secret through https://console.cloud.google.com/ 
+  4. Navigate to APIs & Services → Credentials → Create Credentials → OAuth Client ID.
+  5. Select Web Application.
+  6. Set the Authorized redirect URI to: http://localhost:5000/oauth/callback
+  7. Copy the generated Client ID and Client Secret into your .env file.
+
 ## Running the Application
   ```bash
   python run.py
