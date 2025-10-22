@@ -90,24 +90,24 @@ The application also integrates **OAuth2 Authorization Code Flow** for third-par
 ## Installation Guide
 
 ### Clone the Repository
-    ```bash
-    git clone git@github.com:TobiasVeda/ikt222_assignment_3.git
-    ```
+  ```bash
+  git clone git@github.com:TobiasVeda/ikt222_assignment_3.git
+  ```
     
-    ```bash
-    cd ikt222_assignment_3
-    ```
+  ```bash
+  cd ikt222_assignment_3
+  ```
 ### Create Virtual Environment
-    ```bash
-    python -m venv venv
-    source venv/bin/activate      # Linux / macOS
-    venv\Scripts\activate         # Windows
-    ```
+  ```bash
+  python -m venv venv
+  source venv/bin/activate      # Linux / macOS
+  venv\Scripts\activate         # Windows
+  ```
   
 ### Install Dependencies
-    ```bash
-    pip install -r requirements.txt 
-    ```
+  ```bash
+  pip install -r requirements.txt 
+  ```
 ## Running the Application
   ```bash
   python run.py
